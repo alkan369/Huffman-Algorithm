@@ -2,6 +2,7 @@
 #include <string>
 #include <unordered_map>
 #include <queue>
+#include <set>
 #include "HTree.hpp"
 
 class Comparator{
@@ -9,14 +10,27 @@ class Comparator{
     bool operator()(const HTree& firstTree, const HTree& secondTree){
         return firstTree.getCnt() > secondTree.getCnt();
     }
+    // bool operator()(const std::pair<char, size_t>& firstObject, const std::pair<char, size_t>& secondObject){
+    //     return firstObject.second > secondObject.second;
+    // }
 };
 
 int main(){
 
     std::string s = "ABRACADABRA";
+    std::cout << s.size() << std::endl;
+    // std::string s = "BCAADDDCCACACAC";
+    // std::string s = "AIIIIPSPPPPPEEIISIIIIPPPPPPPIEEIETETASETAETAEA\nEAAEEEEEAAA";
+
     std::unordered_map<char, size_t> occurences;
-    for(auto elem : s)
+    // std::set<char> occurencesTwo;
+
+    for(auto elem : s){
         ++occurences[elem];
+        // if(occurencesTwo.find() != occurencesTwo.end()){
+
+        // }
+    }
     for(auto elem : occurences)
         std::cout << elem.first << " " << elem.second << std::endl;
     std::cout << std::endl;
@@ -37,7 +51,7 @@ int main(){
         queue.push(HTree(first, second));
         queue.pop();
     }
-    queue.top().print();
+    // queue.top().print();
     // while(!queue.empty()){
     //     queue.top().print();
     //     std::cout << std::endl;
@@ -45,6 +59,20 @@ int main(){
     //     queue.pop();
     // }
 
+    HTree result(queue.top());
+    queue.pop();
+    // result.print();
+    result.printByLevels();
+    std::string resultString = result.getCharacterCode('A');
+    std::cout << "A : " << resultString << " " <<  occurences['A'] * resultString.size() << std::endl;
+    resultString = result.getCharacterCode('B');
+    std::cout << "B : " << resultString << " " << occurences['B'] * resultString.size() << std::endl;
+    resultString =  result.getCharacterCode('C');
+    std::cout << "C : " << resultString << " " <<  occurences['C'] * resultString.size() << std::endl;
+    resultString = result.getCharacterCode('D');
+    std::cout << "D : " << resultString << " " << occurences['D'] * resultString.size() << std::endl;
+    resultString = result.getCharacterCode('R');
+    std::cout << "R : " << resultString << " " <<  occurences['R'] * resultString.size() << std::endl;
     std::cout << "THE END" << std::endl;
     return 0;
 }

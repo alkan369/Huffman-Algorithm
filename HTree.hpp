@@ -16,6 +16,7 @@ class HTree{
     void copy(Node*& current, Node* other);
     void clear(Node* current);
     bool isLeaf(Node* current)const;
+    bool getCharacterCodeHelper(Node* current, char searched, std::string& encode);
     void printHelper(Node* current)const;
 
     public:
@@ -27,5 +28,9 @@ class HTree{
 
     size_t getCnt()const;
 
+    std::string getCharacterCode(char searched);
+
     void print()const;
+
+    void printByLevels()const;
 };
