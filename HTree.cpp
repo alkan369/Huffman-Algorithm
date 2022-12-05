@@ -1,33 +1,23 @@
-#include "HTree.hpp"
+#include "HTree.h"
 #include <queue>
 
 void HTree::copy(Node*& current, Node* other){
-    // std::cout << "LINE 4" << std::endl;
     if(!other){
         current = nullptr;
         return;
     }
-    // std::cout << "LINE 9" << std::endl;
     current = new Node(other->data, other->cnt);
-    // std::cout << "CNT : " << current->cnt << std::endl;
-    // std::cout << "LINE 11" << std::endl;
     copy(current->left, other->left);
-    // std::cout << "LINE 13" << std::endl;
     copy(current->right, other->right);
-    // std::cout << "LINE 14" << std::endl;
 }
 
 void HTree::clear(Node *current){
-    // std::cout << "LINE 4" << std::endl;
     if(!current)
         return;
-    // std::cout << "LINE 7" << std::endl;
     clear(current->left);
     clear(current->right);
-    // std::cout << "LINE 10" << std::endl;
     delete current;
     current = nullptr;
-    // std::cout << "LINE 13" << std::endl;
 }
 
 bool HTree::isLeaf(Node *current)const{
@@ -35,22 +25,17 @@ bool HTree::isLeaf(Node *current)const{
 }
 
 bool HTree::getCharacterCodeHelper(Node * current, char searched, std::string& encode){
-    // std::cout << "LINE 38" << std::endl;
     if(isLeaf(current)){
         if(current->data == searched)
             return true;
         encode.pop_back();
-    // std::cout << "LINE 43" << std::endl;
         return false;
     }
-    // std::cout << "LINE 46" << std::endl;
     encode.push_back('0');
     if(getCharacterCodeHelper(current->left, searched, encode))
         return true;
     // encode.pop_back();
-    // std::cout << "LINE 51" << std::endl;
     encode.push_back('1');
-    // std::cout << "LINE 53" << std::endl;
     return getCharacterCodeHelper(current->right, searched, encode);
 }
 
@@ -63,6 +48,8 @@ void HTree::printHelper(Node *current)const {
     std::cout << "CNT : " << current->cnt << std::endl;
     printHelper(current->right);
 }
+
+HTree::HTree() : root(nullptr) {}
 
 HTree::HTree(char newData, size_t newCnt) : root(new Node(newData, newCnt)) {}
 

@@ -20,6 +20,7 @@ class HTree{
     void printHelper(Node* current)const;
 
     public:
+    HTree();
     HTree(char newData, size_t newCnt);
     HTree(const HTree& first, const HTree& second);
     HTree(const HTree& other);
