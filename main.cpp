@@ -4,6 +4,7 @@
 #include <queue>
 #include "HTree.h"
 #include "Comparator.h"
+#include "System.h"
 
 int main(){
 
@@ -47,6 +48,15 @@ int main(){
     std::cout << "D : " << resultString << " OCCURENCE : " << occurences['D'] << " BYTES : " << occurences['D'] * resultString.size() << std::endl;
     resultString = result.getCharacterCode('R');
     std::cout << "R : " << resultString << " OCCURENCE : " <<  occurences['R'] << " BYTES : " << occurences['R'] * resultString.size() << std::endl;
+    resultString = "";
+    for(auto elem : s)
+        resultString.append(result.getCharacterCode(elem));
+    std::cout << "ENCODED : " << resultString << std::endl;
+    System system;
+    std::cout << "ENCODED : " << system.getEncodedMessage(s) << std::endl;
+    std::cout << std::boolalpha << resultString.compare(system.getEncodedMessage(s)) << std::endl;
+    std::cout << resultString.size() << " " << system.getEncodedMessage(s).size() << std::endl;
+    std::cout << system.getEncodedMessage(s) << std::endl;
     std::cout << "THE END" << std::endl;
     return 0;
 }
