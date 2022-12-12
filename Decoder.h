@@ -9,6 +9,10 @@ class Decoder{
     public:
     Decoder() = default;
 
+    void setKeyTable(const std::unordered_map<std::string, char>& newKeyTable){
+        keyTable = newKeyTable;
+    }
+
     std::string decodeMessage(const std::string& message){
         std::string result = "";
         std::string code = "";

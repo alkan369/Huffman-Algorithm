@@ -57,6 +57,20 @@ int main(){
     std::cout << std::boolalpha << resultString.compare(system.getEncodedMessage(s)) << std::endl;
     std::cout << resultString.size() << " " << system.getEncodedMessage(s).size() << std::endl;
     std::cout << system.getEncodedMessage(s) << std::endl;
+    std::unordered_map<std::string, char> keyTable;
+    for(auto elem : occurences){
+        keyTable[result.getCharacterCode(elem.first)] = elem.first;
+    }
+    std::cout << "KEY TABLE : " << std::endl;
+    for(auto elem : keyTable)
+        std::cout << elem.second << " = " << elem.first << std::endl;
+
+    keyTable = system.getKeyTable();
+    std::cout << "NEW KEY TABLE : " << std::endl;
+    for(auto elem : keyTable)
+        std::cout << elem.second << " = " << elem.first << std::endl;
+    std::cout << "RESULT : " << std::endl;
+    std::cout << system.getDecodedMessage(system.getEncodedMessage(s), keyTable) << std::endl;
     std::cout << "THE END" << std::endl;
     return 0;
 }

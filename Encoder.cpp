@@ -19,7 +19,11 @@ void Encoder::constructHuffmanTree(){
     queue.pop();
 }
 
-Encoder::Encoder() = default;
+void Encoder::constructKeyTable(){
+    keyTable.clear();
+    for(const std::pair<char, size_t>& elem : occurences)
+        keyTable[huffmanTree.getCharacterCode(elem.first)] = elem.first;
+}
 
 std::string Encoder::encodeMessage(const std::string &message){
     constructHistogram(message);
@@ -27,6 +31,11 @@ std::string Encoder::encodeMessage(const std::string &message){
     std::string result = "";
     for(char character : message)
         result.append(huffmanTree.getCharacterCode(character));
+    constructKeyTable();
     occurences.clear();
     return result;
+}
+
+std::unordered_map<std::string, char> Encoder::getKeyTable(){
+    return keyTable;
 }
