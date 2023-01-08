@@ -20,7 +20,7 @@ void Menu::loadCommands(){
     commandExplanations[6] = " - starts the program with current mode and input and output files";
     commandExplanations[7] = " - prints the input file name and output file the that the program is working with";
     commandExplanations[8] = " - prints again all commands";
-    commandExplanations[9] = " - ends the programs";
+    commandExplanations[9] = " - ends the program";
 }
 
 void Menu::printCommands(){
@@ -90,7 +90,7 @@ void Menu::commandCases(){
             std::cout << "Exitting" << std::endl;
             break;
         default:
-            // exception ???
+            // exception ??? no
             std::cout << "Invalid command" << std::endl;
             break;
     }
@@ -109,12 +109,12 @@ void Menu::setDebugMode(){
 }
 
 void Menu::setInputFile(const std::string& input){
-    // try catch?
+    // try catch? no
     system.setInputFileName(input);
 }
 
 void Menu::setOutputFile(const std::string& output){
-    // try catch?
+    // try catch? no
     system.setOutputFileName(output);
 }
 
@@ -130,7 +130,7 @@ void Menu::mode(){
             std::cout << "Mode : Debug mode" << std::endl;
             break;
         default:
-            // exception ? 
+            // exception ? no
             std::cout << "Mode : no mode set" << std::endl;
             break;
     }

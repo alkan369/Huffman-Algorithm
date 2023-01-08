@@ -1,5 +1,6 @@
 #pragma once
 #include <fstream>
+#include <cassert>
 #include "Encoder.h"
 #include "Decoder.h"
 
@@ -31,14 +32,18 @@ class System{
 
 
     bool doesExist(const std::string& fileName);
+    // read keyTable
+    // exception methods
     void writeToFileCompress();
     void readFromFileCompress();
     void writeToFileDecompress();
     void readFromFileDecompress();
+    void writeToBits();
+    void readFromBits();
 
     void compress();
     void decompress();
-    void debug(); //?????
+    void debug();
     void start();
 
 

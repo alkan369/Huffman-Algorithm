@@ -26,25 +26,29 @@ bool HTree::isLeaf(Node *current)const{
 
 bool HTree::getCharacterCodeHelper(Node * current, char searched, std::string& encode){
     if(isLeaf(current)){
-        if(current->data == searched)
+        if(current->data == searched){
             return true;
+        }
         encode.pop_back();
         return false;
     }
     encode.push_back('0');
-    if(getCharacterCodeHelper(current->left, searched, encode))
+    if(getCharacterCodeHelper(current->left, searched, encode)){
         return true;
+    }
     // encode.pop_back();
     encode.push_back('1');
     return getCharacterCodeHelper(current->right, searched, encode);
 }
 
-void HTree::printHelper(Node *current)const {
-    if(!current)
+void HTree::printHelper(Node *current)const{
+    if(!current){
         return;
+    }
     printHelper(current->left);
-    if(isLeaf(current))
+    if(isLeaf(current)){
         std::cout << "DATA : " << current->data << " ";
+    }
     std::cout << "CNT : " << current->cnt << std::endl;
     printHelper(current->right);
 }
@@ -81,7 +85,7 @@ size_t HTree::getCnt() const{
 
 std::string HTree::getCharacterCode(char searched){
     std::string result = "";
-    if(getCharacterCodeHelper(root, searched, result));
+    if(getCharacterCodeHelper(root, searched, result))
         return result;
     return "";
 }

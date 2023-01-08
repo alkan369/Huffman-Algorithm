@@ -7,6 +7,19 @@
 #include "System.h"
 #include "Menu.h"
 #include <bitset>
+
+
+void func(){
+
+    std::cout << "Alkan" << std::endl;
+    std::cout << "is" << std::endl;
+    std::cout << "the" << std::endl;
+    std::runtime_error("Problem");
+    std::cout << "best" << std::endl;
+    std::cout << "programmer" << std::endl;
+
+}
+
 int main(){
 
     // std::string s = "ABRACADABRA";
@@ -49,6 +62,8 @@ int main(){
     // std::cout << "D : " << resultString << " OCCURENCE : " << occurences['D'] << " BYTES : " << occurences['D'] * resultString.size() << std::endl;
     // resultString = result.getCharacterCode('R');
     // std::cout << "R : " << resultString << " OCCURENCE : " <<  occurences['R'] << " BYTES : " << occurences['R'] * resultString.size() << std::endl;
+    // std::cout << "P : " << result.getCharacterCode('P') << std::endl;
+    // std::cout << "Q : " << result.getCharacterCode('Q') << std::endl;
     // resultString = "";
     // for(auto elem : s)
     //     resultString.append(result.getCharacterCode(elem));
@@ -72,31 +87,48 @@ int main(){
     //     std::cout << elem.second << " = " << elem.first << std::endl;
     // std::cout << "RESULT : " << std::endl;
     // std::cout << system.getDecodedMessage(system.getEncodedMessage(s), keyTable) << std::endl;
+    // Menu menu;
+    // menu.run();
+    // std::cout << "THE END" << std::endl;
+    // std::ofstream file("try");
+    // std::string compressed = "01011001110011110101100";
+    // std::string binString = "";
+    // int size = 0;
+    // for(char c : compressed){
+    //     if(size == 8){
+    //         size = 0;
+    //         file << std::bitset<8>(binString).to_ulong();
+    //         file << ' ';
+    //         binString.clear();
+    //     }
+    //     binString.push_back(c);
+    //     ++size;
+    // }
+    // // file << 5;
+    // if(!binString.empty()){
+    //     file << std::bitset<8>(binString).to_ulong();
+    // }
+    // file.close();
+    // std::bitset<8> bits(std::stoi("23"));
+    // std::cout << bits << std::endl;
+    // std::cout << bits.to_string() << std::endl;
+    // std::cout << bits.to_ulong() << std::endl;
     Menu menu;
     menu.run();
-    std::cout << "THE END" << std::endl;
-    std::ofstream file("try");
-    std::string compressed = "01011001110011110101100";
-    std::string binString = "";
-    int size = 0;
-    for(char c : compressed){
-        if(size == 8){
-            size = 0;
-            file << std::bitset<8>(binString).to_ulong();
-            file << ' ';
-            binString.clear();
-        }
-        binString.push_back(c);
-        ++size;
-    }
-    // file << 5;
-    if(!binString.empty()){
-        file << std::bitset<8>(binString).to_ulong();
-    }
-    file.close();
-    std::bitset<8> bits(std::stoi("23"));
-    std::cout << bits << std::endl;
-    std::cout << bits.to_string() << std::endl;
-    std::cout << bits.to_ulong() << std::endl;
+    // std::string l = "AMinaKoyem";
+    // std::cout << l.substr(0,4) << std::endl;
+    // std::cout << l.substr(4,4) << std::endl;
+    // std::cout << l.substr(8,4) << std::endl;
+    // std::cout << l.substr(12,4) << std::endl;
+    // try{
+    //     func();
+    // }
+    // catch(std::runtime_error& e){
+    //     std::cout << e.what() << std::endl;
+    //     std::cout << "the" << std::endl;
+    //     std::cout << "greatest" << std::endl;
+    //     std::cout << "programmer" << std::endl;
+    // }
+    std::cout << "END" << std::endl;
     return 0;
 }

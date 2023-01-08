@@ -2,10 +2,11 @@
 #include <bitset>
 
 void System::setMode(short mode){
-    if(mode > 2 || mode < 0 /* mode < -1*/){
-        throw std::invalid_argument("Invalid mode");
-        // assert ??
-    }
+    assert(mode >= 0 || mode <= 2);
+    // if(mode > 2 || mode < 0 /* mode < -1*/){
+    //     throw std::invalid_argument("Invalid mode");
+    //     // assert ??
+    // }
     workMode = mode;
 }
 
@@ -15,7 +16,8 @@ int System::getMode()const{
 
 void System::setInputFileName(const std::string& input){
     if(input.empty()){
-        throw std::invalid_argument("Input file name empty");
+        std::cout << "Input file name empty" << std::endl;
+        return;
     }
     std::cout << "Input file set" << std::endl;
     inputFileName = input;
@@ -27,7 +29,8 @@ const std::string& System::getInputFileName() const{
 
 void System::setOutputFileName(const std::string& output){
     if(output.empty()){
-        throw std::invalid_argument("Output file name empty");
+        std::cout << "Output file name empty" << std::endl;
+        return;
     }
     std::cout << "Output file set" << std::endl;
     outputFileName = output;
@@ -41,34 +44,72 @@ bool System::doesExist(const std::string& fileName){
 }
 
 void System::writeToFileCompress(){
+    if(outputFileName.empty()){
+        throw std::invalid_argument("Output txt file name empty");
+    }
     std::ofstream file(outputFileName);
     if(!file.is_open()){
-        throw std::runtime_error("Output file not opened");
+        throw std::runtime_error("Output txt file not opened");
     }
+    // auto result = encode.encodeMessage(message);
+    // file.write(result.c_str(), result.size());
+    //assert(!message.empty())
     file << encode.encodeMessage(message);
     file.close();
-    file = std::ofstream(outputFileName + "table");
-    std::unordered_map<std::string, char> table = encode.getKeyTable();
-    std::string tableToString = "";
+    file = std::ofstream(outputFileName + "table.txt");
+    keyTable = encode.getKeyTable();
+    // std::string tableToString = "";
+    message.clear();
     if(!file.is_open()){
-        throw std::runtime_error("Output file for key table not opened");
+        throw std::runtime_error("Output txt file for key table not opened");
     }
-    for(std::pair<std::string, char> elem : table){
-        tableToString.append(elem.first + " = ");
-        tableToString.push_back(elem.second);
-        tableToString.push_back('\n');
+    for(std::pair<std::string, char> elem : keyTable){
+        message.append(elem.first + " = " + elem.second + '\n');
+        // tableToString.push_back(elem.second);
+        // tableToString.push_back('\n');
     }
-    file << tableToString;
+    file << message;
     file.close();
     message.clear();
+    keyTable.clear();
 }
 
 void System::readFromFileCompress(){
-    if(!doesExist(inputFileName)){
-        std::cout << "------------" << std::endl;
-        std::cout << "INPUT FILE NAME : " << inputFileName << std::endl;
-        std::cout << "------------" << std::endl;
-        throw std::invalid_argument("Input file does not exist");
+    if(inputFileName.empty() || !doesExist(inputFileName)){
+        throw std::invalid_argument("Input txt file name empty or does not exist");
+    }
+    std::ifstream file(inputFileName);
+    if(!file.is_open()){
+        throw std::runtime_error("Input txt file not opened");
+    }
+    char c;
+    while(file.get(c)){
+        message.push_back(c);
+    }
+    file.close();
+    if(message.empty()){
+        throw std::invalid_argument("Empty Input txt file");
+    }
+}
+
+void System::writeToFileDecompress(){
+    if(outputFileName.empty()){
+        throw std::invalid_argument("Empty Output file name");
+    }
+    std::ofstream file(outputFileName);
+    if(!file.is_open()){
+        throw std::runtime_error("Output txt file not opened");
+    }
+    decode.setKeyTable(keyTable);
+    file << decode.decodeMessage(message);
+    file.close();
+    message.clear();
+    keyTable.clear();
+}
+
+void System::readFromFileDecompress(){
+    if(inputFileName.empty() || !doesExist(inputFileName) || !doesExist(inputFileName + "table.txt")){
+        throw std::invalid_argument("Empty name or Input txt file or table for input txt file does not exist");
     }
     std::ifstream file(inputFileName);
     if(!file.is_open()){
@@ -78,42 +119,10 @@ void System::readFromFileCompress(){
     while(file.get(c)){
         message.push_back(c);
     }
-}
-
-void System::writeToFileDecompress(){
-    std::ofstream file(outputFileName);
-    if(!file.is_open()){
-        throw std::runtime_error("Output file not opened");
-    }
-    decode.setKeyTable(keyTable);
-    // std::cout << "KEY TABLE : " << std::endl;
-    // for(auto elem : keyTable){
-    //     std::cout << elem.first << " = " << elem.second << std::endl;
-    // }
-    // std::cout << std::endl;
-    // std::cout << "INPUT MESSAGE : " << message << std::endl;
-    // message = decode.decodeMessage(message);
-    // std::cout << "DECODED MESSAGE : " << message << std::endl;
-    file << decode.decodeMessage(message);
     file.close();
-    message.clear();
-}
-
-void System::readFromFileDecompress(){
-    if(!doesExist(inputFileName) || !doesExist(inputFileName + "table")){
-        throw std::invalid_argument("Input file or table for input file does not exist");
-    }
-    std::ifstream file(inputFileName);
+    file = std::ifstream(inputFileName + "table.txt");
     if(!file.is_open()){
-        std::runtime_error("Input file not opened");
-    }
-    char c;
-    while(file.get(c)){
-        message.push_back(c);
-    }
-    file = std::ifstream(inputFileName + "table");
-    if(!file.is_open()){
-        std::runtime_error("Table file for Input file not opened");
+        std::runtime_error("Table txt file for Input file not opened");
     }
     short spaceCnt = 0;
     std::string binary = "";
@@ -137,20 +146,152 @@ void System::readFromFileDecompress(){
         }
     }
     file.close();
+    if(message.empty() || keyTable.empty()){
+        throw std::invalid_argument("Empty Input txt file or Empty key table txt file");
+    }
 }
+
+void System::writeToBits(){
+    if(outputFileName.empty()){
+        throw std::invalid_argument("Empty Output txt file name");
+    }
+    std::ofstream file(outputFileName);
+    if(!file.is_open()){
+        throw std::runtime_error("File not opened");
+    }
+    // try
+    message = encode.encodeMessage(message);
+    short size = 0;
+
+    for(char elem : message){
+        if(size = 8){
+            size = 0;
+
+        }
+    }
+    short index = 0;
+    while(index < message.size()){
+        file << std::bitset<8>(message.substr(index, 8)).to_ulong(); // try
+        file << ' ';
+        index += 8;
+    }
+    file.close();
+    file = std::ofstream(outputFileName + "table.txt");
+    if(!file.is_open()){
+        throw std::runtime_error("Table file not opened");
+    }
+    keyTable = encode.getKeyTable();
+    message.clear();
+    for(const std::pair<std::string, char>& elem : keyTable){
+        message.append(elem.first + " = " + elem.second + '\n');
+        // message.push_back(elem.second);
+    }
+    file << message;
+    file.close();
+    message.clear();
+    keyTable.clear();
+}
+
+void System::readFromBits(){
+    if(inputFileName.empty() || !doesExist(inputFileName) || !doesExist(inputFileName + "table.txt")){
+        throw std::invalid_argument("Empty name or Input txt file or table for input txt file does not exist");
+    }
+    std::ifstream file(inputFileName);
+    if(!file.is_open()){
+        throw std::runtime_error("File not opened");
+    }
+    std::string data = "";
+    char c;
+    while(file.get(c)){
+        if(c == ' ' || c == '\0'){
+            if(!data.empty()){
+                message.append(std::bitset<8>(std::stoi(data)).to_string()); // try
+                data.clear();
+            }
+            continue;
+        }
+        data.push_back(c);
+    }
+    file.close();
+    file = std::ifstream(inputFileName + "table.txt");
+    if(!file.is_open()){
+        throw std::runtime_error("Table file not opened");
+    }
+    short spaceCnt = 0;
+    char character;
+    while(file.get(c)){
+        if(c == ' '){
+            ++spaceCnt;
+            continue;
+        }
+        else if(c == '\n'){
+            spaceCnt = 0;
+            keyTable[data] = character;
+            data.clear();
+            continue;
+        }
+        else if(spaceCnt == 0){
+            data.push_back(c);
+        }
+        else if(spaceCnt == 2){
+            character = c;
+        }
+    }
+    file.close();
+    if(message.empty() || keyTable.empty()){
+        throw std::invalid_argument("Empty Input txt file or Empty key table txt file");
+    }
+    std::cout << "---------------" << std::endl;
+    std::cout << "MESSAGE : " << message << std::endl;
+    std::cout << "---------------" << std::endl;
+}
+
 
 void System::compress(){
     readFromFileCompress();
-    writeToFileCompress();
+    //assert(meesage ! empty)
+    // writeToFileCompress();
+    writeToBits(); // test
 }
 
 void System::decompress(){
-    readFromFileDecompress();
-    writeToFileDecompress();
+    // readFromFileDecompress();
+    readFromBits(); // test
+    // assert(message ! empty)
+    writeToFileDecompress(); // how many bits last one && bool flag
 }
 
 void System::debug(){
     readFromFileCompress();
+    // assert(message ! empty)
+    message = encode.encodeMessage(message);
+    std::string binary = "";
+    std::vector<std::string> binaryNum;
+    std::vector<unsigned long> decimal;
+    short size = 0;
+    for(char c : message){
+        if(size == 8){
+            size = 0;
+            binaryNum.push_back(binary);
+            decimal.push_back(std::bitset<8>(binary).to_ulong()); // try catch 
+            binary.clear();
+        }
+        binary.push_back(c);
+        ++size;
+    }
+    if(!binary.empty()){
+        binaryNum.push_back(binary);
+        decimal.push_back(std::bitset<8>(binary).to_ulong());//try
+    }
+    assert(binaryNum.size() == decimal.size());
+    for(const std::string& elem : binaryNum){
+        std::cout << elem << " ";
+    }
+    std::cout << " -> " << std::endl;
+    for(const unsigned long& elem : decimal){
+        std::cout << elem << " ";
+    }
+    std::cout << std::endl;
 }
 
 void System::start(){
@@ -165,7 +306,8 @@ void System::start(){
             debug();
             break;
         default:
-            throw std::invalid_argument("No mode has been set");
+            std::cout << "No mode has been set" << std::endl;
+            return;
             break;
     }
     workMode = -1;
