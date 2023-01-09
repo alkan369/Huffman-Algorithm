@@ -24,7 +24,7 @@ bool HTree::isLeaf(Node *current)const{
     return !current->left && !current->right;
 }
 
-bool HTree::getCharacterCodeHelper(Node * current, char searched, std::string& encode){
+bool HTree::getCharacterCodeHelper(Node* current, char searched, std::string& encode){
     if(isLeaf(current)){
         if(current->data == searched){
             return true;
@@ -79,8 +79,13 @@ HTree::~HTree(){
     clear(root);
 }
 
+void HTree::clearTree(){
+    clear(root);
+    root = nullptr;
+}
+
 size_t HTree::getCnt() const{
-    return root->cnt;
+    return root ? root->cnt : 0;
 }
 
 std::string HTree::getCharacterCode(char searched){
@@ -95,6 +100,9 @@ void HTree::print() const{
 }
 
 void HTree::printByLevels() const{
+    if(!root){
+        return;
+    }
     std::queue<Node*> queue;
     queue.push(root);
     while(!queue.empty()){
@@ -102,7 +110,7 @@ void HTree::printByLevels() const{
         while(size){
             if(isLeaf(queue.front()))
                 std::cout << "DATA : " << queue.front()->data << " ";
-            std::cout << "CNT : " << queue.front()->cnt << std::endl; 
+            std::cout << "CNT : " << queue.front()->cnt << std::endl;
             if(queue.front()->left)
                 queue.push(queue.front()->left);
             if(queue.front()->right)

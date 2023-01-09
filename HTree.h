@@ -27,6 +27,8 @@ class HTree{
     HTree operator=(const HTree& other);
     ~HTree();
 
+    void clearTree();
+
     size_t getCnt()const;
 
     std::string getCharacterCode(char searched);

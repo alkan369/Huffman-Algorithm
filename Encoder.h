@@ -3,6 +3,7 @@
 #include <unordered_map>
 #include <queue>
 #include <vector>
+#include <cassert>
 #include "HTree.h"
 #include "Comparator.h"
 

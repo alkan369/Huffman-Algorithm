@@ -3,13 +3,11 @@
 #include <cassert>
 #include "Encoder.h"
 #include "Decoder.h"
+#include "BitSetHelper.h"
 
 
 class System{
     private:
-    // bool isCompression;
-    // HTree huffmanTree;
-    // two classes ?? (Encode and Decode) ?
     Encoder encode;
     Decoder decode;
     std::string inputFileName;
@@ -17,8 +15,6 @@ class System{
     std::string message;
     std::unordered_map<std::string, char> keyTable;
     short workMode = -1;
-
-    // std::string message;
 
     public:
     System() = default;
@@ -32,20 +28,22 @@ class System{
 
 
     bool doesExist(const std::string& fileName);
+    void checkOpenInputFile(std::ifstream& file, const std::string& fileName);
+    void checkOpenOutputFile(std::ofstream& file, const std::string& fileName);
     // read keyTable
     // exception methods
     void writeToFileCompress();
     void readFromFileCompress();
     void writeToFileDecompress();
     void readFromFileDecompress();
-    void writeToBits();
-    void readFromBits();
+    void writeToBits(); // -> remove
+    void readFromBits(); // -> remove
+    void printToScreen();
 
     void compress();
     void decompress();
     void debug();
     void start();
-
 
     std::string getEncodedMessage(const std::string& message);
 

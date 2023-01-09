@@ -9,12 +9,12 @@
 #include <bitset>
 
 
-void func(){
+void func(std::fstream& file, const std::string& line){
 
     std::cout << "Alkan" << std::endl;
     std::cout << "is" << std::endl;
     std::cout << "the" << std::endl;
-    std::runtime_error("Problem");
+    throw std::invalid_argument("Problem");
     std::cout << "best" << std::endl;
     std::cout << "programmer" << std::endl;
 
@@ -121,10 +121,15 @@ int main(){
     // std::cout << l.substr(8,4) << std::endl;
     // std::cout << l.substr(12,4) << std::endl;
     // try{
-    //     func();
+    //     std::fstream file("test-file");
+    //     func(file, "String");
     // }
-    // catch(std::runtime_error& e){
+    // catch(std::invalid_argument& e){
     //     std::cout << e.what() << std::endl;
+    //     std::cout << "Invalid argument has ocurred" << std::endl;
+    // }
+    // catch(...){
+    //     std::cout << "Any exception" << std::endl;
     //     std::cout << "the" << std::endl;
     //     std::cout << "greatest" << std::endl;
     //     std::cout << "programmer" << std::endl;
