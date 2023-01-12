@@ -12,6 +12,7 @@ class Menu{
     void loadCommands();
     void printCommands();
     void validateCommand(short& choice, std::string& keyWord, std::string& secondPart);
+    void getSecondPart(std::string& secondPart);
     void commandCases();
     
     void setCompressionMode();
@@ -20,11 +21,14 @@ class Menu{
     void setInputFile(const std::string& input);
     void setOutputFile(const std::string& output);
     void mode();
-    void start();
+    void start(); // we'll see
     void files();
+    void help();
+    void exit();
     
     public:
     Menu() = default;
+
 
     void run();
 };

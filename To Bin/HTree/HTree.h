@@ -17,7 +17,7 @@ class HTree{
     void copy(Node*& current, Node* other);
     void clear(Node* current);
     bool isLeaf(Node* current)const;
-    std::string getCharacterCodeHelper(Node* current, char searched, std::string encode);
+    bool getCharacterCodeHelper(Node* current, char searched, std::string& encode);
     void printHelper(Node* current)const;
 
     public:
@@ -28,7 +28,7 @@ class HTree{
     HTree operator=(const HTree& other);
     ~HTree();
 
-    void clearTree(); // to delete ?
+    void clearTree();
 
     size_t getCnt()const;
 

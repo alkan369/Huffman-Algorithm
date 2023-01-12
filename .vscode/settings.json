@@ -50,6 +50,18 @@
         "xtree": "cpp",
         "xutility": "cpp",
         "bitset": "cpp",
-        "fstream": "cpp"
+        "fstream": "cpp",
+        "chrono": "cpp",
+        "csignal": "cpp",
+        "ctime": "cpp",
+        "iomanip": "cpp",
+        "map": "cpp",
+        "mutex": "cpp",
+        "ratio": "cpp",
+        "sstream": "cpp",
+        "thread": "cpp",
+        "unordered_set": "cpp",
+        "xlocmon": "cpp",
+        "xloctime": "cpp"
     }
 }

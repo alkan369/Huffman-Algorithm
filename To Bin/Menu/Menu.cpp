@@ -69,22 +69,10 @@ void Menu::commandCases(){
             setDebugMode();
             break;
         case 3:
-            try{
-                setInputFile(secondPart);
-            }
-            catch(std::invalid_argument& e){
-                std::cout << e.what() << std::endl;
-                return;
-            }
+            setInputFile(secondPart);
             break;
         case 4:
-            try{
-                setOutputFile(secondPart);
-            }
-            catch(std::invalid_argument& e){
-                std::cout << e.what() << std::endl;
-                return;
-            }
+            setOutputFile(secondPart);
             break;
         case 5:
             mode();
@@ -102,6 +90,7 @@ void Menu::commandCases(){
             std::cout << "Exitting" << std::endl;
             break;
         default:
+            // exception ??? no
             std::cout << "Invalid command" << std::endl;
             break;
     }
@@ -120,10 +109,12 @@ void Menu::setDebugMode(){
 }
 
 void Menu::setInputFile(const std::string& input){
+    // try catch? no
     system.setInputFileName(input);
 }
 
 void Menu::setOutputFile(const std::string& output){
+    // try catch? no
     system.setOutputFileName(output);
 }
 
@@ -139,18 +130,14 @@ void Menu::mode(){
             std::cout << "Mode : Debug mode" << std::endl;
             break;
         default:
+            // exception ? no
             std::cout << "Mode : no mode set" << std::endl;
             break;
     }
 }
 
 void Menu::start(){
-    try{
-        system.start();
-    }
-    catch(std::invalid_argument& e){
-        std::cout << e.what() << std::endl;
-    }
+    system.start();
 }
 
 void Menu::files(){

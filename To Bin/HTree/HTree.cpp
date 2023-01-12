@@ -20,32 +20,28 @@ void HTree::clear(Node *current){
     current = nullptr;
 }
 
-bool HTree::isLeaf(Node* current)const{
-    return current && !current->left && !current->right;
+bool HTree::isLeaf(Node *current)const{
+    return !current->left && !current->right;
 }
 
-std::string HTree::getCharacterCodeHelper(Node* current, char searched, std::string encode){
-    if(!current){
-        return "";
-    }
+bool HTree::getCharacterCodeHelper(Node* current, char searched, std::string& encode){
     if(isLeaf(current)){
         if(current->data == searched){
-            return encode;
+            return true;
         }
-        // encode.pop_back(); // check this
-        return "";
+        encode.pop_back();
+        return false;
     }
-    // encode.push_back('0');
-    std::string result = getCharacterCodeHelper(current->left, searched, encode + '0');
-    if(!result.empty()){
-        return result;
+    encode.push_back('0');
+    if(getCharacterCodeHelper(current->left, searched, encode)){
+        return true;
     }
-    // encode.pop_back(); // this
-    // encode.push_back('1');
-    return getCharacterCodeHelper(current->right, searched, encode + '1');
+    // encode.pop_back();
+    encode.push_back('1');
+    return getCharacterCodeHelper(current->right, searched, encode);
 }
 
-void HTree::printHelper(Node* current)const{
+void HTree::printHelper(Node *current)const{
     if(!current){
         return;
     }
@@ -61,17 +57,17 @@ HTree::HTree() : root(nullptr) {}
 
 HTree::HTree(char newData, size_t newCnt) : root(new Node(newData, newCnt)) {}
 
-HTree::HTree(const HTree& first, const HTree& second){
+HTree::HTree(const HTree &first, const HTree &second){
     root = new Node('\0', first.root->cnt + second.root->cnt);
     copy(root->left, first.root);
     copy(root->right, second.root);
 }
 
-HTree::HTree(const HTree& other){
+HTree::HTree(const HTree &other){
     copy(root, other.root);
 }
 
-HTree HTree::operator=(const HTree& other){
+HTree HTree::operator=(const HTree &other){
     if(this != &other){
         clear(root);
         copy(root, other.root);
@@ -93,11 +89,10 @@ size_t HTree::getCnt() const{
 }
 
 std::string HTree::getCharacterCode(char searched){
-    // std::string result = "";
-    // if(getCharacterCodeHelper(root, searched, result))
-    //     return result;
-    // return "";
-    return getCharacterCodeHelper(root, searched, "");
+    std::string result = "";
+    if(getCharacterCodeHelper(root, searched, result))
+        return result;
+    return "";
 }
 
 void HTree::print() const{
@@ -123,6 +118,7 @@ void HTree::printByLevels() const{
             queue.pop();
             --size;
         }
+        std::cout << std::endl;
         std::cout << std::endl;
     }
 }

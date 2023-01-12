@@ -2,22 +2,19 @@
 #include <string>
 #include <unordered_map>
 #include <queue>
-#include <utility>
-#include <map>
 #include <vector>
 #include <cassert>
-#include "HTree.h"
-#include "Comparator.h"
+#include "../HTree/HTree.h"
+#include "../Comparator/Comparator.h"
 
 class Encoder{
     private:
-    size_t occurences[128] = {0};
+    std::unordered_map<char, size_t> occurences;
     std::priority_queue<HTree, std::vector<HTree>, Comparator> queue;
     HTree huffmanTree;
     std::unordered_map<std::string, char> keyTable;
 
     void constructHistogram(const std::string& message);
-    void clearHistogram();
     void constructHuffmanTree();
     void constructKeyTable();
 
