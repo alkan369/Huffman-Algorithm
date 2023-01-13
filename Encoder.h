@@ -3,7 +3,6 @@
 #include <unordered_map>
 #include <queue>
 #include <utility>
-#include <map>
 #include <vector>
 #include <cassert>
 #include "HTree.h"
@@ -11,7 +10,7 @@
 
 class Encoder{
     private:
-    size_t occurences[128] = {0};
+    size_t occurences[128] = {0}; // 0 - 127 codes for every ASCII char
     std::priority_queue<HTree, std::vector<HTree>, Comparator> queue;
     HTree huffmanTree;
     std::unordered_map<std::string, char> keyTable;

@@ -80,6 +80,8 @@ TEST_CASE("CONSTRUCTING HUFFMAN TREE"){
     CHECK(t6.getCharacterCode('C') == "1110");
     CHECK(t6.getCharacterCode('D') == "1111");
 
+    t6.printByLevels();
+
 }
 
 TEST_CASE("TESTING COMPARATOR FOR PRIORITY QUEUE"){

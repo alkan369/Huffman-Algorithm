@@ -11,6 +11,7 @@ class Decoder{
 
     void setKeyTable(const std::unordered_map<std::string, char>& newKeyTable){
         if(newKeyTable.empty()){
+            // if empty key table is given, exception is thrown
             throw std::invalid_argument("Empty Key Table");
         }
         keyTable = newKeyTable;
@@ -22,12 +23,12 @@ class Decoder{
         }
         std::string result = "";
         std::string code = "";
-        // std::cout << "ENTERED MESSAGE : " << message << std::endl;
+        // iterating through the given message
         for(char character : message){
+            // adding the current character to a string
             code.push_back(character);
-            if(keyTable.find(code) != keyTable.end()){
-                // std::cout << "CODE : " << code << " = " << "CHAR : "<< keyTable[code] << std::endl;
-                result.push_back(keyTable[code]);
+            if(keyTable.find(code) != keyTable.end()){ // if the code is found in the key table
+                result.push_back(keyTable[code]); // the result char is added to the string
                 code.clear();
             }
         }

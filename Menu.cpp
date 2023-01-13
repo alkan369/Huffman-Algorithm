@@ -1,6 +1,9 @@
 #include "Menu.h"
 
+// private
+
 void Menu::loadCommands(){
+    // loading  the supported commands and their explanations
     commandNames[0] = "c";
     commandNames[1] = "d";
     commandNames[2] = "debug";
@@ -24,37 +27,47 @@ void Menu::loadCommands(){
 }
 
 void Menu::printCommands(){
+    // printing the commands
     std::cout << "Supported commands : " << std::endl;
     for(short i = 0; i < 10; i++)
         std::cout << commandNames[i] << commandExplanations[i] << std::endl;
 }
 
 void Menu::validateCommand(short& choice, std::string& keyWord, std::string& secondPart){
+    // bool variable in case we find space
     bool foundSpace = false;
+    // iterating through the entered command
     for(char c : currentCommand){
+        // if space is found the bool variable is changed to true
         if(c == ' '){
             foundSpace = true;
             continue;
         }
         if(!foundSpace){
+            // if space is not found, then, it means that the key word is being constructed
             keyWord.push_back(c);
         }
         else{
+            // if space is found, then the second part of the command is being constructed
             secondPart.push_back(c);
         }
     }
     for(short i = 0; i < 10; i++){
+        // iterating through the commands
         if(keyWord == commandNames[i]){
+            // changing the value of the variable to 'i' if the command is found(is valid)
             choice = i;
         }
     }
 }
 
 void Menu::commandCases(){
+    // default value for choice is -1
     short choice = -1;
     std::string keyWord;
     std::string secondPart;
     validateCommand(choice, keyWord, secondPart);
+    // entering in switch case to determine which method to call
     switch (choice){
         case 0:
             std::cout << "Mode : Compression mode" << std::endl;
@@ -70,6 +83,8 @@ void Menu::commandCases(){
             break;
         case 3:
             try{
+                // throws exception if the second part is empty
+                // and this command is called
                 setInputFile(secondPart);
             }
             catch(std::invalid_argument& e){
@@ -79,6 +94,8 @@ void Menu::commandCases(){
             break;
         case 4:
             try{
+                // throws exception if the second part is empty
+                // and this command is called
                 setOutputFile(secondPart);
             }
             catch(std::invalid_argument& e){
@@ -102,29 +119,32 @@ void Menu::commandCases(){
             std::cout << "Exitting" << std::endl;
             break;
         default:
+            // if this case is entered, it means that the entered command is invalid
             std::cout << "Invalid command" << std::endl;
             break;
     }
 }
 
+// setting the working modes
 void Menu::setCompressionMode(){
-    system.setMode(0);
+    system.setMode(0); // to compression
 }
 
 void Menu::setDecompressionMode(){
-    system.setMode(1);
+    system.setMode(1); // to decompression
 }
 
 void Menu::setDebugMode(){
-    system.setMode(2);
+    system.setMode(2); // to debug
 }
 
+// setting the file names that the program will work with
 void Menu::setInputFile(const std::string& input){
-    system.setInputFileName(input);
+    system.setInputFileName(input); // setting input file name
 }
 
 void Menu::setOutputFile(const std::string& output){
-    system.setOutputFileName(output);
+    system.setOutputFileName(output); // setting output file name
 }
 
 void Menu::mode(){
@@ -139,6 +159,7 @@ void Menu::mode(){
             std::cout << "Mode : Debug mode" << std::endl;
             break;
         default:
+            // default value is -1, it means that no mode has been set
             std::cout << "Mode : no mode set" << std::endl;
             break;
     }
@@ -146,6 +167,7 @@ void Menu::mode(){
 
 void Menu::start(){
     try{
+        // throws exception if no work mode has been set(if workmode is -1)
         system.start();
     }
     catch(std::invalid_argument& e){
@@ -153,19 +175,21 @@ void Menu::start(){
     }
 }
 
+// prints the files the program currently works with
 void Menu::files(){
     std::cout << "Input file : " << system.getInputFileName() << std::endl;
     std::cout << "Output file : " << system.getOutputFileName() << std::endl;
 }
 
+// public
+
 void Menu::run(){
-    loadCommands();
-    printCommands();
+    loadCommands(); // the commands are loaded
+    printCommands(); // and printed one time
     do{
         std::cout << "Enter command : ";
-        std::getline(std::cin, currentCommand);
-        commandCases();
-        // std::cin.ignore();
-    }while(currentCommand != "exit");
+        std::getline(std::cin, currentCommand); // entering a command
+        commandCases(); // checking what to do with the program after the input
+    }while(currentCommand != "exit"); // the program continues until "exit" is entered
 
 }

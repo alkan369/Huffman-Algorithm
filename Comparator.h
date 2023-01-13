@@ -3,10 +3,8 @@
 
 class Comparator{
     public:
+    // needed to construct minHeap with Huffman trees
     bool operator()(const HTree& firstTree, const HTree& secondTree){
-        return /*firstTree.getCnt() == secondTree.getCnt() ? /*false ? true : */ firstTree.getCnt() > secondTree.getCnt();
+        return firstTree.getCnt() > secondTree.getCnt();
     }
-    // bool operator()(const std::pair<char, size_t>& firstObject, const std::pair<char, size_t>& secondObject){
-    //     return firstObject.second >= secondObject.second;
-    // }
 };

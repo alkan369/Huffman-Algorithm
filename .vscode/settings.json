@@ -62,6 +62,7 @@
         "thread": "cpp",
         "unordered_set": "cpp",
         "xlocmon": "cpp",
-        "xloctime": "cpp"
+        "xloctime": "cpp",
+        "cassert": "cpp"
     }
 }

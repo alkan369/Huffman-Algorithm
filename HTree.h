@@ -1,5 +1,6 @@
 #pragma once
 #include <iostream>
+#include <queue>
 
 
 struct Node{
@@ -14,11 +15,10 @@ class HTree{
     private:
     Node* root;
 
-    void copy(Node*& current, Node* other);
-    void clear(Node* current);
-    bool isLeaf(Node* current)const;
-    std::string getCharacterCodeHelper(Node* current, char searched, std::string encode);
-    void printHelper(Node* current)const;
+    void copy(Node*& current, Node* other); // used in copy constructors and operator=
+    void clear(Node* current); // used in destructor
+    bool isLeaf(Node* current)const; // checks if current node is leaf
+    std::string getCharacterCodeHelper(Node* current, char searched, std::string encode); // gets the coding of entered character
 
     public:
     HTree();
@@ -28,13 +28,9 @@ class HTree{
     HTree operator=(const HTree& other);
     ~HTree();
 
-    void clearTree(); // to delete ?
-
     size_t getCnt()const;
 
     std::string getCharacterCode(char searched);
-
-    void print()const;
 
     void printByLevels()const;
 };

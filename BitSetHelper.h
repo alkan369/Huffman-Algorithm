@@ -4,6 +4,9 @@
 
 class BitSetHelper{
     public:
+    // used only in one method in System class
+    // because the bitset<size> must be known in compilation time
+    // and in our case the maxium size is 8 bits
     std::string getString(int enteredNum, unsigned long number){
         switch (enteredNum){
             case 1:

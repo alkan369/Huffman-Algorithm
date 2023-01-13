@@ -1,5 +1,6 @@
-#include <queue>
 #include "HTree.h"
+
+// private
 
 void HTree::copy(Node*& current, Node* other){
     if(!other){
@@ -29,33 +30,24 @@ std::string HTree::getCharacterCodeHelper(Node* current, char searched, std::str
         return "";
     }
     if(isLeaf(current)){
+        // if the current node is leaf and is the searched character
+        // return the current encoding
         if(current->data == searched){
             return encode;
         }
-        // encode.pop_back(); // check this
+        // else return empty string
         return "";
     }
-    // encode.push_back('0');
     std::string result = getCharacterCodeHelper(current->left, searched, encode + '0');
     if(!result.empty()){
         return result;
     }
-    // encode.pop_back(); // this
-    // encode.push_back('1');
+    // if the result in the left subtree is empty string
+    // right subtree is searched
     return getCharacterCodeHelper(current->right, searched, encode + '1');
 }
 
-void HTree::printHelper(Node* current)const{
-    if(!current){
-        return;
-    }
-    printHelper(current->left);
-    if(isLeaf(current)){
-        std::cout << "DATA : " << current->data << " ";
-    }
-    std::cout << "CNT : " << current->cnt << std::endl;
-    printHelper(current->right);
-}
+// public
 
 HTree::HTree() : root(nullptr) {}
 
@@ -83,28 +75,16 @@ HTree::~HTree(){
     clear(root);
 }
 
-void HTree::clearTree(){
-    clear(root);
-    root = nullptr;
-}
-
 size_t HTree::getCnt() const{
     return root ? root->cnt : 0;
 }
 
 std::string HTree::getCharacterCode(char searched){
-    // std::string result = "";
-    // if(getCharacterCodeHelper(root, searched, result))
-    //     return result;
-    // return "";
-    return getCharacterCodeHelper(root, searched, "");
-}
-
-void HTree::print() const{
-    printHelper(root);
+    return getCharacterCodeHelper(root, searched, ""); // test with &
 }
 
 void HTree::printByLevels() const{
+    // bfs
     if(!root){
         return;
     }
@@ -113,13 +93,21 @@ void HTree::printByLevels() const{
     while(!queue.empty()){
         int size = queue.size();
         while(size){
-            if(isLeaf(queue.front()))
+            if(isLeaf(queue.front())){
+                // if the front node is leaf, then the character of the leaf is also printed
                 std::cout << "DATA : " << queue.front()->data << " ";
+            }
+            // the cnt of the current node is printed
             std::cout << "CNT : " << queue.front()->cnt << std::endl;
-            if(queue.front()->left)
+            if(queue.front()->left){
+                // if there is left node of the current node, it is added to the queue
                 queue.push(queue.front()->left);
-            if(queue.front()->right)
+            }
+            if(queue.front()->right){
+                // if there is right node of the current node, it is added to the queue
                 queue.push(queue.front()->right);
+            }
+            // then the front node is removed from the queue
             queue.pop();
             --size;
         }
