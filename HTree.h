@@ -16,7 +16,7 @@ class HTree{
     Node* root;
 
     void copy(Node*& current, Node* other); // used in copy constructors and operator=
-    void clear(Node* current); // used in destructor
+    void clear(Node*& current); // used in destructor
     bool isLeaf(Node* current)const; // checks if current node is leaf
     std::string getCharacterCodeHelper(Node* current, char searched, std::string encode); // gets the coding of entered character
 

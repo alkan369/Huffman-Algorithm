@@ -4,6 +4,7 @@
 
 void Encoder::constructHistogram(const std::string& message){
     for(char character : message){
+        // incrementing the data in character index in the array
         ++occurences[character];
     }
 }

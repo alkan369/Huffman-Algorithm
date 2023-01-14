@@ -12,7 +12,7 @@ void HTree::copy(Node*& current, Node* other){
     copy(current->right, other->right);
 }
 
-void HTree::clear(Node *current){
+void HTree::clear(Node*& current){
     if(!current)
         return;
     clear(current->left);

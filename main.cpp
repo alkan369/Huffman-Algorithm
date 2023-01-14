@@ -4,6 +4,7 @@
 int main(){
     Menu menu;
     menu.run();
-    std::cout << "END" << std::endl;
+    std::cout << std::endl;
+    std::cout << "THE END" << std::endl;
     return 0;
 }

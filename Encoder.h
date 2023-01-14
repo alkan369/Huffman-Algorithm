@@ -2,7 +2,6 @@
 #include <string>
 #include <unordered_map>
 #include <queue>
-#include <utility>
 #include <vector>
 #include <cassert>
 #include "HTree.h"

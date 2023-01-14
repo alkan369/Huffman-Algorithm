@@ -28,6 +28,7 @@ void Menu::loadCommands(){
 
 void Menu::printCommands(){
     // printing the commands
+    std::cout << std::endl;
     std::cout << "Supported commands : " << std::endl;
     for(short i = 0; i < 10; i++)
         std::cout << commandNames[i] << commandExplanations[i] << std::endl;

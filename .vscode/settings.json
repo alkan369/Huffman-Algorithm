@@ -64,5 +64,6 @@
         "xlocmon": "cpp",
         "xloctime": "cpp",
         "cassert": "cpp"
-    }
+    },
+    "C_Cpp.errorSquiggles": "disabled"
 }
